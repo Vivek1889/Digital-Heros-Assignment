@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import "./config/db.js";
+
 import authRoutes from "./routes/authRoutes.js";
 import scoreRoutes from "./routes/scoreRoutes.js";
 import subscriptionRoutes from "./routes/subscriptionRoutes.js";
@@ -14,31 +15,31 @@ dotenv.config();
 
 const app = express();
 
-// Middlewares
-import cors from "cors";
-
+// ✅ Middlewares
 app.use(
   cors({
-    origin: "*", // allow all (for now)
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
   }),
 );
+
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api/auth", authRoutes);
 
+// ✅ Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/scores", scoreRoutes);
 app.use("/api/subscription", subscriptionRoutes);
 app.use("/api/draw", drawRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/charity", charrityRouter);
-// Test Route
+
+// ✅ Test route
 app.get("/", (req, res) => {
   res.send("API Running 🚀");
 });
 
-// Start server
+// ✅ Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
