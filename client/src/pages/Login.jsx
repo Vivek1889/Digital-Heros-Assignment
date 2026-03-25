@@ -8,14 +8,17 @@ function Login() {
   const [password, setPassword] = useState("");
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:3001/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        "https://digital-heros-assignment-production.up.railway.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ email, password }),
         },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
+      );
 
       const data = await res.json();
 

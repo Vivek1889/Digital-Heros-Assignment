@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: "https://digital-heros-assignment-production.up.railway.app/api",
   withCredentials: true,
 });
 
