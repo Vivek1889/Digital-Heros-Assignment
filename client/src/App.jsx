@@ -5,6 +5,7 @@ import Admin from "./pages/Admin";
 import SignUp from "./pages/SignUp";
 import Navbar from "./components/Navbar";
 import ProtectedDashboard from "./components/ProtectedDashboard";
+import ProtectedAdmin from "./components/ProtectedAdmin";
 import { useEffect, useState } from "react";
 import API from "./services/api";
 function App() {
@@ -37,7 +38,14 @@ function App() {
             </ProtectedDashboard>
           }
         />
-        <Route path="/admin" element={<Admin user={user} />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedAdmin user={user}>
+              <Admin user={user} />
+            </ProtectedAdmin>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
