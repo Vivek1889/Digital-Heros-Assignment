@@ -14,7 +14,6 @@ dotenv.config();
 
 const app = express();
 
-// ✅ FIXED CORS (best version)
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -37,14 +36,14 @@ app.use(
   }),
 );
 
-// ✅ handle preflight properly
-app.options("*", cors());
+// handle preflight properly
+app.options("/", cors());
 
-// ✅ middlewares
+//  middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ routes
+// routes
 app.use("/api/auth", authRoutes);
 app.use("/api/scores", scoreRoutes);
 app.use("/api/subscription", subscriptionRoutes);
@@ -52,12 +51,12 @@ app.use("/api/draw", drawRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/charity", charrityRouter);
 
-// ✅ test route
+//  test route
 app.get("/", (req, res) => {
   res.send("API Running 🚀");
 });
 
-// ✅ start server
+//  start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
