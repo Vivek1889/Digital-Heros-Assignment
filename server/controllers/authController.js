@@ -59,7 +59,7 @@ export const login = (req, res) => {
           res.cookie("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: "false",
+            sameSite: "none",
           });
 
           res.json({
