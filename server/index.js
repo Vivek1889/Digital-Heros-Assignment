@@ -15,7 +15,6 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Middlewares
 app.use(
   cors({
     origin: [
@@ -23,7 +22,7 @@ app.use(
       "https://digital-heros-assignment-fawn.vercel.app/", // deployed frontend
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // ✅ REQUIRED
+    credentials: true,
   }),
 );
 
