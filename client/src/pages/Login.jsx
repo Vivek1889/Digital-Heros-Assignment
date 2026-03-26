@@ -15,7 +15,7 @@ function Login() {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
+          credentials: "include", // ✅ FIXED
           body: JSON.stringify({ email, password }),
         },
       );
@@ -25,9 +25,11 @@ function Login() {
       if (!res.ok) {
         throw new Error(data.msg || "Login failed");
       }
-      alert("Login Successfull");
+
+      alert("Login Successful");
       window.location.href = "/dashboard";
     } catch (err) {
+      console.error(err);
       alert(err.message);
     }
   };

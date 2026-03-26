@@ -18,8 +18,12 @@ const app = express();
 // ✅ Middlewares
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "http://localhost:5173", // local frontend
+      "https://digital-heros-assignment-fawn.vercel.app/", // deployed frontend
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // ✅ REQUIRED
   }),
 );
 

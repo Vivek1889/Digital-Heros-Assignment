@@ -39,7 +39,7 @@ export const login = (req, res) => {
         return res.status(400).json({ msg: "Wrong password" });
       }
 
-      // ✅ Fetch subscription
+      // Fetch subscription
       db.query(
         "SELECT * FROM subscriptions WHERE user_id = ?",
         [user.id],
@@ -48,7 +48,7 @@ export const login = (req, res) => {
 
           const subscription = subResult[0] || null;
           console.log(user);
-          // ✅ Add subscription to token payload
+          // Add subscription to token payload
           const token = generateToken({
             id: user.id,
             role: user.role,
@@ -79,8 +79,8 @@ export const login = (req, res) => {
 export const logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false, // true in production (HTTPS)
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
   });
 
   res.json({ msg: "Logged out successfully" });
