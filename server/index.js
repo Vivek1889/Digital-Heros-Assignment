@@ -9,77 +9,41 @@ import scoreRoutes from "./routes/scoreRoutes.js";
 import subscriptionRoutes from "./routes/subscriptionRoutes.js";
 import drawRoutes from "./routes/drawRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-import charityRouter from "./routes/charityRouter.js"; // ✅ fixed spelling
+import charrityRouter from "./routes/charityRouter.js";
 
 dotenv.config();
 
 const app = express();
 
-// ✅ CORS FIX (IMPORTANT)
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "https://digital-heros-assignment-fawn.vercel.app",
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (postman, mobile apps)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
+    origin: [
+      "http://localhost:5173", // local frontend
+      "https://digital-heros-assignment-fawn.vercel.app", // deployed frontend
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true, // ✅ REQUIRED
   }),
 );
 
-// ✅ handle ALL preflight requests
-app.options(/.*/, cors());
-
-// ✅ middlewares
 app.use(express.json());
 app.use(cookieParser());
 
-// ✅ DEBUG middleware (very useful)
-app.use((req, res, next) => {
-  console.log("➡️", req.method, req.url);
-  next();
-});
-
-// ✅ routes
+// ✅ Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/scores", scoreRoutes);
 app.use("/api/subscription", subscriptionRoutes);
 app.use("/api/draw", drawRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/charity", charityRouter);
+app.use("/api/charity", charrityRouter);
 
-// ✅ test route
+// ✅ Test route
 app.get("/", (req, res) => {
   res.send("API Running 🚀");
 });
 
-// ❌ 404 handler
-app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
-
-// ❌ global error handler
-app.use((err, req, res, next) => {
-  console.error("❌ ERROR:", err.message);
-  res.status(500).json({
-    message: err.message || "Internal Server Error",
-  });
-});
-
-// ✅ start server
+// ✅ Start server
 const PORT = process.env.PORT || 3001;
-
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
